@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/github/languages/code-size/akesseler/QuickCopy.svg" />
   </a>
   <a href="https://github.com/akesseler/QuickCopy/wiki" alt="wiki">
-    <img src="https://img.shields.io/badge/wiki-API-orange.svg" />
+    <img src="https://img.shields.io/badge/wiki-docs-orange.svg" />
   </a>
 </p>
 
