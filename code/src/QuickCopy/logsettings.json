@@ -1,0 +1,30 @@
+{
+  "Plexdata": {
+    "LogWriter": {
+      "Settings": {
+        "LogLevel": "Trace",
+        "LogTime": "Local",
+        "LogType": "Raw",
+        "ShowTime": true,
+        "TimeFormat": "s",
+        "PartSplit": ";",
+        "FullName": false,
+        "Culture": "de-DE",
+
+        "Filename": "qcp.log",
+        "IsRolling": false,
+        "IsQueuing": false,
+        "Threshold": 1024,
+        "Encoding": "utf-8",
+
+        "UseColors": false,
+        "QuickEdit": true,
+        "WindowTitle": "Quick Copy",
+        "BufferSize": {
+          "Width": 500,
+          "Lines": 1000
+        }
+      }
+    }
+  }
+}
