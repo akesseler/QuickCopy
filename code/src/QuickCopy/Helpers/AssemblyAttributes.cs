@@ -67,6 +67,28 @@ namespace Plexdata.QuickCopy.Helpers
             }
         }
 
+        public static String Platform
+        {
+            get
+            {
+                String result = String.Empty;
+#if WIN32
+                result += "32-Bit, ";
+#elif WIN64
+                result += "64-Bit, ";
+#else
+                result += "Any CPU, ";
+#endif
+
+#if DEBUG
+                result += "Debug ";
+#else
+                result += "Release ";
+#endif
+                return result.Trim();
+            }
+        }
+
         public static String Company
         {
             get
