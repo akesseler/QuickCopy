@@ -24,6 +24,7 @@
 
 using Plexdata.ArgumentParser.Extensions;
 using Plexdata.LogWriter.Abstraction;
+using Plexdata.LogWriter.Definitions;
 using Plexdata.LogWriter.Extensions;
 using Plexdata.LogWriter.Logging;
 using Plexdata.LogWriter.Logging.Standard;
@@ -47,11 +48,19 @@ namespace Plexdata.QuickCopy
 {
     class Program
     {
+        #region Private fields
+
         private ILogger logger = null;
-        private ConsoleHandler handler;
+
+        private ConsoleHandler handler = null;
+
         private readonly Arguments arguments = null;
 
         private readonly CancellationTokenSource cancellation = null;
+
+        #endregion
+
+        #region Entry point
 
         [STAThread]
         internal static Int32 Main(String[] options)
@@ -59,6 +68,8 @@ namespace Plexdata.QuickCopy
             Program instance = new Program();
             return instance.Run(options);
         }
+
+        #endregion
 
         #region Construction
 
@@ -82,9 +93,9 @@ namespace Plexdata.QuickCopy
 
         #endregion
 
-        #region Internal methods
+        #region Private methods
 
-        internal Int32 Run(String[] options)
+        private Int32 Run(String[] options)
         {
             if (!this.TryParse(options))
             {
@@ -102,7 +113,13 @@ namespace Plexdata.QuickCopy
 
             if (this.arguments.IsVersion)
             {
-                this.ShowInfo();
+                this.ShowVersion();
+                return 0;
+            }
+
+            if (this.arguments.IsSettings)
+            {
+                this.ShowSettings();
                 return 0;
             }
 
@@ -137,10 +154,6 @@ namespace Plexdata.QuickCopy
 
             return 0;
         }
-
-        #endregion
-
-        #region Private methods
 
         private void Process()
         {
@@ -220,9 +233,7 @@ namespace Plexdata.QuickCopy
                     try
                     {
                         // This is a fallback to handle exception before the real logger exists. 
-                        ILoggerSettingsBuilder builder = new LoggerSettingsBuilder();
-                        builder.SetFilename(Path.Combine(Directory.GetCurrentDirectory(), "logsettings.json"));
-                        helper = new PersistentLogger(new PersistentLoggerSettings(builder.Build()));
+                        helper = new PersistentLogger(new PersistentLoggerSettings(this.GetLoggerSettings()));
                     }
                     catch { }
                 }
@@ -237,16 +248,13 @@ namespace Plexdata.QuickCopy
 
         private void ApplyLogger()
         {
-            ILoggerSettingsBuilder builder = new LoggerSettingsBuilder();
-            builder.SetFilename(Path.Combine(Directory.GetCurrentDirectory(), "logsettings.json"));
-
             if (this.arguments.IsConsole)
             {
-                this.logger = new ConsoleLogger(new ConsoleLoggerSettings(builder.Build()));
+                this.logger = new ConsoleLogger(new ConsoleLoggerSettings(this.GetLoggerSettings()));
             }
             else
             {
-                this.logger = new PersistentLogger(new PersistentLoggerSettings(builder.Build()));
+                this.logger = new PersistentLogger(new PersistentLoggerSettings(this.GetLoggerSettings()));
             }
         }
 
@@ -264,15 +272,60 @@ namespace Plexdata.QuickCopy
             this.HitAnyKey();
         }
 
-        private void ShowInfo()
+        private void ShowVersion()
         {
             Console.WriteLine($"{nameof(AssemblyAttributes.Title)}:       {AssemblyAttributes.Title}");
             Console.WriteLine($"{nameof(AssemblyAttributes.Version)}:     {AssemblyAttributes.Version}");
+            Console.WriteLine($"{nameof(AssemblyAttributes.Platform)}:    {AssemblyAttributes.Platform}");
             Console.WriteLine($"{nameof(AssemblyAttributes.Company)}:     {AssemblyAttributes.Company}");
             Console.WriteLine($"{nameof(AssemblyAttributes.Copyright)}:   {AssemblyAttributes.Copyright}");
             Console.WriteLine($"{nameof(AssemblyAttributes.Description)}: {AssemblyAttributes.Description}");
 
             this.HitAnyKey();
+        }
+
+        private void ShowSettings()
+        {
+            IConsoleLoggerSettings cls = new ConsoleLoggerSettings(this.GetLoggerSettings());
+            IPersistentLoggerSettings pls = new PersistentLoggerSettings(this.GetLoggerSettings());
+
+            Console.WriteLine($"- Logging");
+            Console.WriteLine($"  - General");
+            Console.WriteLine($"    - {nameof(cls.LogLevel)}:    {cls.LogLevel.ToDisplayText()}");
+            Console.WriteLine($"    - {nameof(cls.LogType)}:     {cls.LogType.ToString().ToLower()}");
+            Console.WriteLine($"    - {nameof(cls.LogTime)}:     {cls.LogTime.ToString().ToLower()}");
+            Console.WriteLine($"    - {nameof(cls.ShowTime)}:    {(cls.ShowTime ? "yes" : "no")}");
+            Console.WriteLine($"    - {nameof(cls.TimeFormat)}:  {(cls.TimeFormat == null ? "<null>" : (String.IsNullOrWhiteSpace(cls.TimeFormat) ? "<empty>" : cls.TimeFormat))}");
+            Console.WriteLine($"    - {nameof(cls.PartSplit)}:   {cls.PartSplit}");
+            Console.WriteLine($"    - {nameof(cls.FullName)}:    {(cls.FullName ? "yes" : "no")}");
+            Console.WriteLine($"    - {nameof(cls.Culture)}:     {(cls.Culture == null ? "<null>" : cls.Culture.Name)}");
+            Console.WriteLine($"  - Console");
+            Console.WriteLine($"    - {nameof(cls.UseColors)}:   {(cls.UseColors ? "yes" : "no")}");
+            Console.WriteLine($"    - {nameof(cls.WindowTitle)}: {(cls.WindowTitle == null ? "<null>" : (String.IsNullOrWhiteSpace(cls.WindowTitle) ? "<empty>" : cls.WindowTitle))}");
+            Console.WriteLine($"    - {nameof(cls.QuickEdit)}:   {(cls.QuickEdit ? "yes" : "no")}");
+            Console.WriteLine($"    - {nameof(cls.BufferSize)}:  {(cls.BufferSize == null ? "<null>" : $"{nameof(cls.BufferSize.Width)}={cls.BufferSize.Width.ToSafeString()}, {nameof(cls.BufferSize.Lines)}={cls.BufferSize.Lines.ToSafeString()}")}");
+            Console.WriteLine($"    - {nameof(cls.Coloring)}:    {cls.Coloring.Count}");
+
+            foreach (KeyValuePair<LogLevel, Coloring> value in cls.Coloring)
+            {
+                Console.WriteLine($"                   {value.Key.ToDisplayText().PadRight(8, ' ')} : {value.Value.Foreground}, {value.Value.Background}");
+            }
+
+            Console.WriteLine($"  - Persistent");
+            Console.WriteLine($"    - {nameof(pls.Filename)}:    {(pls.Filename == null ? "<null>" : (String.IsNullOrWhiteSpace(pls.Filename) ? "<empty>" : pls.Filename))}");
+            Console.WriteLine($"    - {nameof(pls.IsRolling)}:   {(pls.IsRolling ? "yes" : "no")}");
+            Console.WriteLine($"    - {nameof(pls.IsQueuing)}:   {(pls.IsQueuing ? "yes" : "no")}");
+            Console.WriteLine($"    - {nameof(pls.Threshold)}:   {pls.Threshold.ToSafeString("KiB")}");
+            Console.WriteLine($"    - {nameof(pls.Encoding)}:    {(pls.Encoding == null ? "<null>" : pls.Encoding.BodyName)}");
+
+            this.HitAnyKey();
+        }
+
+        private ILoggerSettingsSection GetLoggerSettings()
+        {
+            ILoggerSettingsBuilder builder = new LoggerSettingsBuilder();
+            builder.SetFilename(Path.Combine(Directory.GetCurrentDirectory(), "logsettings.json"));
+            return builder.Build();
         }
 
         [Conditional("DEBUG")]

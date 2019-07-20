@@ -93,6 +93,10 @@ namespace Plexdata.QuickCopy.Models
         [SwitchParameter(SolidLabel = "version", IsExclusive = true)]
         public Boolean IsVersion { get; set; }
 
+        [HelpSummary("Print current program settings. This argument cannot be used together with other options.")]
+        [SwitchParameter(SolidLabel = "settings", IsExclusive = true)]
+        public Boolean IsSettings { get; set; }
+
         [HelpSummary("Print this little help screen.")]
         [SwitchParameter(SolidLabel = "help", BriefLabel = "?")]
         public Boolean IsHelp { get; set; }

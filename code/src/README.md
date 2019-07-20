@@ -37,6 +37,9 @@ below for a list of possible command-line arguments.
 --version         Print program version and other attributes. This argument
                   cannot be used together with other options.
 
+--settings        Print current program settings. This argument cannot be
+                  used together with other options.
+
 --help [-?]       Print this little help screen.
 
 <files>           Provide a distinct list of source files. This source file
