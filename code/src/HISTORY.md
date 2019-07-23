@@ -1,9 +1,12 @@
 
-**1.0.0.1**
-- Extending of version information by a "Platform" value.
-- Adding of command-line argument "settings".
+**1.0.1**
+- Extending of version information by a _Platform_ value.
+- Adding of command-line argument named `settings`.
 - Printing of current program settings.
+- Reduction of version number down to three digits.
+- Adding of two setup projects (x86/x64).
 - Version number increased.
+- Releasing and publishing all changes on GitHub.
 
 **1.0.0.0**
 

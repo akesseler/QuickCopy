@@ -15,6 +15,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "General", "General", "{3397
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickCopyTests", "QuickCopyTests\QuickCopyTests.csproj", "{82BC9292-4F74-47A4-8729-D467946B8B67}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "QuickCopySetup-x64", "QuickCopySetup\QuickCopySetup-x64.vdproj", "{2938A994-C9B3-4978-84AD-05B92581D5ED}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "QuickCopySetup-x86", "QuickCopySetup\QuickCopySetup-x86.vdproj", "{FD814EC5-4FB7-405E-8B9A-625589E0CDB2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{8ACCDD99-3E15-47AB-AC9E-AEDCC59A2887}"
+	ProjectSection(SolutionItems) = preProject
+		QuickCopySetup\LICENSE.rtf = QuickCopySetup\LICENSE.rtf
+		QuickCopySetup\README.md = QuickCopySetup\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -39,9 +49,20 @@ Global
 		{82BC9292-4F74-47A4-8729-D467946B8B67}.Release|x64.Build.0 = Release|x64
 		{82BC9292-4F74-47A4-8729-D467946B8B67}.Release|x86.ActiveCfg = Release|x86
 		{82BC9292-4F74-47A4-8729-D467946B8B67}.Release|x86.Build.0 = Release|x86
+		{2938A994-C9B3-4978-84AD-05B92581D5ED}.Debug|x64.ActiveCfg = Debug
+		{2938A994-C9B3-4978-84AD-05B92581D5ED}.Debug|x86.ActiveCfg = Debug
+		{2938A994-C9B3-4978-84AD-05B92581D5ED}.Release|x64.ActiveCfg = Release
+		{2938A994-C9B3-4978-84AD-05B92581D5ED}.Release|x86.ActiveCfg = Release
+		{FD814EC5-4FB7-405E-8B9A-625589E0CDB2}.Debug|x64.ActiveCfg = Debug
+		{FD814EC5-4FB7-405E-8B9A-625589E0CDB2}.Debug|x86.ActiveCfg = Debug
+		{FD814EC5-4FB7-405E-8B9A-625589E0CDB2}.Release|x64.ActiveCfg = Release
+		{FD814EC5-4FB7-405E-8B9A-625589E0CDB2}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8ACCDD99-3E15-47AB-AC9E-AEDCC59A2887} = {3397F26D-C9EB-42F0-AC6C-75C3EB13AB50}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E8D690B-39E4-4B69-BF15-4970FE0188FE}
