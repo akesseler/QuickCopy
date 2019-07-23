@@ -49,3 +49,9 @@ below for a list of possible command-line arguments.
 ## Trouble Shooting
 
 If you get in trouble with the program don’t hesitate to report a bug.
+
+## Creating Setups
+
+The _Visual Studio_ extension _Microsoft Visual Studio Installer Project_ is 
+required to be able to create the setup files. Please see the `README.md` file 
+in the setup project for more information about creating setup files.
