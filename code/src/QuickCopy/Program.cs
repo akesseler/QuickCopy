@@ -66,7 +66,7 @@ namespace Plexdata.QuickCopy
         internal static Int32 Main(String[] options)
         {
             Program instance = new Program();
-            return instance.Run(options);
+            return instance.Run();
         }
 
         #endregion
@@ -95,9 +95,9 @@ namespace Plexdata.QuickCopy
 
         #region Private methods
 
-        private Int32 Run(String[] options)
+        private Int32 Run()
         {
-            if (!this.TryParse(options))
+            if (!this.TryParse())
             {
                 this.ShowHelp();
                 return -1;
@@ -211,12 +211,17 @@ namespace Plexdata.QuickCopy
             }
         }
 
-        private Boolean TryParse(String[] options)
+        private Boolean TryParse()
         {
             try
             {
-                if (options != null && options.Length > 0)
+                List<String> options = new List<String>(Environment.CommandLine.Extract());
+
+                if (options != null && options.Count > 1)
                 {
+                    // Remove name of executable...
+                    options.RemoveAt(0);
+
                     this.arguments.Process(options);
                     this.arguments.Validate();
                     return true;

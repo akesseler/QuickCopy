@@ -83,8 +83,8 @@
     <ApplicationIcon>app.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Plexdata.ArgumentParser.NET, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plexdata.ArgumentParser.NET.1.0.0.12\lib\net472\Plexdata.ArgumentParser.NET.dll</HintPath>
+    <Reference Include="Plexdata.ArgumentParser.NET, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Plexdata.ArgumentParser.NET.1.0.1\lib\net472\Plexdata.ArgumentParser.NET.dll</HintPath>
     </Reference>
     <Reference Include="Plexdata.LogWriter.Abstraction, Version=1.0.3.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Plexdata.LogWriter.Abstraction.1.0.3.2\lib\netstandard2.0\Plexdata.LogWriter.Abstraction.dll</HintPath>

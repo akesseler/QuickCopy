@@ -57,11 +57,11 @@ namespace Plexdata.QuickCopy.Models
 
         #region Public properties
 
-        [HelpSummary("The source folder path. This parameter optionally depends on parameter \"pattern\". Don't use a final backslash if path is enclosed in double-quotes!")]
+        [HelpSummary("The source folder path. This parameter optionally depends on parameter \"pattern\".")]
         [OptionParameter(SolidLabel = "source", BriefLabel = "s", DependencyList = "Pattern", DependencyType = DependencyType.Optional)]
         public String Source { get; set; }
 
-        [HelpSummary("The target folder path. Don't use a final backslash if path is enclosed in double-quotes!")]
+        [HelpSummary("The target folder path.")]
         [OptionParameter(SolidLabel = "target", BriefLabel = "t")]
         public String Target { get; set; }
 

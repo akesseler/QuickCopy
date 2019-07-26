@@ -12,11 +12,9 @@ below for a list of possible command-line arguments.
 
 ```
 --source [-s]     The source folder path. This parameter optionally depends
-                  on parameter "pattern". Don't use a final backslash if
-                  path is enclosed in double-quotes!
+                  on parameter "pattern".
 
---target [-t]     The target folder path. Don't use a final backslash if
-                  path is enclosed in double-quotes!
+--target [-t]     The target folder path.
 
 --pattern [-p]    Search pattern, such as "*.*". All files are used by
                   default.

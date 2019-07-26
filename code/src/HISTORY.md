@@ -1,4 +1,9 @@
 
+**1.0.2**
+- Bugfix, support of final backslash in path arguments.
+- Version number increased.
+- Releasing and publishing all changes on GitHub.
+
 **1.0.1**
 - Extending of version information by a _Platform_ value.
 - Adding of command-line argument named `settings`.
