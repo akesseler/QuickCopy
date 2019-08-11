@@ -78,34 +78,34 @@ namespace Plexdata.QuickCopy.Handlers
 
         public void Execute()
         {
+            if (this.IsAbort) { return; }
+
+            // Check file name equality.
+            if (!this.CheckDiffer(this.Entry.Source, this.Entry.Target))
+            {
+                return;
+            }
+
+            if (this.IsAbort) { return; }
+
+            // Check and validate source file.
+            if (!this.CheckSource(this.Entry.Source))
+            {
+                return;
+            }
+
+            if (this.IsAbort) { return; }
+
+            // Check and validate target file.
+            if (!this.CheckTarget(this.Entry.Target, this.Entry.IsOverwrite))
+            {
+                return;
+            }
+
+            if (this.IsAbort) { return; }
+
             try
             {
-                if (this.IsAbort) { return; }
-
-                // Check file name equality.
-                if (!this.CheckDiffer(this.Entry.Source, this.Entry.Target))
-                {
-                    return;
-                }
-
-                if (this.IsAbort) { return; }
-
-                // Check and validate source file.
-                if (!this.CheckSource(this.Entry.Source))
-                {
-                    return;
-                }
-
-                if (this.IsAbort) { return; }
-
-                // Check and validate target file.
-                if (!this.CheckTarget(this.Entry.Target))
-                {
-                    return;
-                }
-
-                if (this.IsAbort) { return; }
-
                 using (new PlaylistEntryExecutionTimer(this.logger, this.GetExecutionDetails()))
                 using (IncrementalHash sourceHash = IncrementalHash.CreateHash(HashAlgorithmName.MD5))
                 using (IncrementalHash targetHash = IncrementalHash.CreateHash(HashAlgorithmName.MD5))
@@ -146,6 +146,10 @@ namespace Plexdata.QuickCopy.Handlers
                 // case of an unsuccessful termination (!error && !cancel).
                 this.DeleteSource(this.Entry.Source);
 
+                // Remove origin file in case of moving is enabled but not in 
+                // case of an unsuccessful termination (!error && !cancel).
+                this.DeleteSource(this.Entry.Origin);
+
                 // Remove target file but only in case of an unsuccessful 
                 // termination (error || cancel).
                 this.DeleteTarget(this.Entry.Target);
@@ -156,7 +160,7 @@ namespace Plexdata.QuickCopy.Handlers
 
         #region Private properties
 
-        public Boolean IsAbort
+        private Boolean IsAbort
         {
             get
             {
@@ -278,14 +282,18 @@ namespace Plexdata.QuickCopy.Handlers
         /// <summary>
         /// Validates the target file (not empty) and creates the folder structure 
         /// if necessary. Additionally, all existing file attributes are released.
+        /// But only if target file already exists and overwrite mode is enabled.
         /// </summary>
         /// <param name="targetFile">
         /// The target file to check.
         /// </param>
+        /// <param name="overwrite">
+        /// Current overwrite mode.
+        /// </param>
         /// <returns>
         /// True, if successful and false otherwise.
         /// </returns>
-        private Boolean CheckTarget(String targetFile)
+        private Boolean CheckTarget(String targetFile, Boolean overwrite)
         {
             if (String.IsNullOrWhiteSpace(targetFile))
             {
@@ -309,6 +317,17 @@ namespace Plexdata.QuickCopy.Handlers
 
                 if (nominee.Exists)
                 {
+                    if (!overwrite)
+                    {
+                        // Do not set error flag!
+                        this.logger.Warning(
+                            MethodBase.GetCurrentMethod(),
+                            "Target file exists and overwrite is disabled.",
+                            this.GetTargetFileDetail(targetFile));
+
+                        return false;
+                    }
+
                     nominee.Attributes = FileAttributes.Normal; // Release all attributes.
                 }
 
@@ -461,6 +480,8 @@ namespace Plexdata.QuickCopy.Handlers
         {
             try
             {
+                if (String.IsNullOrWhiteSpace(source)) { return; }
+
                 // Don't do anything in case of abort state.
                 if (this.IsAbort) { return; }
 
@@ -497,6 +518,8 @@ namespace Plexdata.QuickCopy.Handlers
         {
             try
             {
+                if (String.IsNullOrWhiteSpace(target)) { return; }
+
                 // Don't do anything in case of success state.
                 if (!this.IsAbort) { return; }
 
