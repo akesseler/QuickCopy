@@ -36,6 +36,8 @@ namespace Plexdata.QuickCopy.Models
 
         private String source = String.Empty;
 
+        private String origin = String.Empty;
+
         private String target = String.Empty;
 
         #endregion
@@ -60,6 +62,25 @@ namespace Plexdata.QuickCopy.Models
             set
             {
                 this.source = FilePathAdjuster.ToLongPath(Path.GetFullPath(value));
+            }
+        }
+
+        public String Origin
+        {
+            get
+            {
+                return this.origin;
+            }
+            set
+            {
+                if (String.IsNullOrWhiteSpace(value))
+                {
+                    this.origin = String.Empty;
+                }
+                else
+                {
+                    this.origin = FilePathAdjuster.ToLongPath(Path.GetFullPath(value));
+                }
             }
         }
 
@@ -93,7 +114,8 @@ namespace Plexdata.QuickCopy.Models
             builder.Append($"{nameof(this.IsVerify)}=[{this.IsVerify.ToSafeString()}], ");
             builder.Append($"{nameof(this.IsOverwrite)}=[{this.IsOverwrite.ToSafeString()}], ");
             builder.Append($"{nameof(this.Target)}=[{this.Target.ToSafeString()}], ");
-            builder.Append($"{nameof(this.Source)}=[{this.Source.ToSafeString()}]");
+            builder.Append($"{nameof(this.Source)}=[{this.Source.ToSafeString()}], ");
+            builder.Append($"{nameof(this.Origin)}=[{this.Origin.ToSafeString()}]");
 
             return builder.ToString();
         }

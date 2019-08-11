@@ -50,6 +50,8 @@ namespace Plexdata.QuickCopy
     {
         #region Private fields
 
+        private static Program instance = null;
+
         private ILogger logger = null;
 
         private ConsoleHandler handler = null;
@@ -58,6 +60,8 @@ namespace Plexdata.QuickCopy
 
         private readonly CancellationTokenSource cancellation = null;
 
+        private FakeLoggerSettings fakeLoggerSettings = null;
+
         #endregion
 
         #region Entry point
@@ -65,8 +69,8 @@ namespace Plexdata.QuickCopy
         [STAThread]
         internal static Int32 Main(String[] options)
         {
-            Program instance = new Program();
-            return instance.Run();
+            Program.instance = new Program();
+            return Program.instance.Run();
         }
 
         #endregion
@@ -92,6 +96,26 @@ namespace Plexdata.QuickCopy
         }
 
         #endregion
+
+        // TODO: Remove workaround for bug in composite logger.
+        private class FakeLoggerSettings : LoggerSettings
+        {
+            public FakeLoggerSettings(ILoggerSettingsSection configuration) : base()
+            {
+                base.LoadSettings(configuration);
+            }
+        }
+
+        // TODO: Remove workaround for bug in composite logger.
+        public static Boolean IsEnabled(LogLevel level)
+        {
+            if (Program.instance != null && Program.instance.fakeLoggerSettings != null)
+            {
+                return (Int32)level >= (Int32)Program.instance.fakeLoggerSettings.LogLevel;
+            }
+
+            return false;
+        }
 
         #region Private methods
 
@@ -253,14 +277,16 @@ namespace Plexdata.QuickCopy
 
         private void ApplyLogger()
         {
-            if (this.arguments.IsConsole)
-            {
-                this.logger = new ConsoleLogger(new ConsoleLoggerSettings(this.GetLoggerSettings()));
-            }
-            else
-            {
-                this.logger = new PersistentLogger(new PersistentLoggerSettings(this.GetLoggerSettings()));
-            }
+            ICompositeLogger helper = new CompositeLogger();
+            ILoggerSettingsSection section = this.GetLoggerSettings();
+
+            // TODO: Remove workaround for bug in composite logger.
+            this.fakeLoggerSettings = new FakeLoggerSettings(section);
+
+            helper.AddLogger(new ConsoleLogger(new ConsoleLoggerSettings(section)));
+            helper.AddLogger(new PersistentLogger(new PersistentLoggerSettings(section)));
+
+            this.logger = helper;
         }
 
         private void ShowHelp()

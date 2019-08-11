@@ -48,7 +48,9 @@ namespace Plexdata.QuickCopy.Timers
             this.logger = logger ?? throw new ArgumentException("The logger must not be null."); ;
             this.stopwatch = new Stopwatch();
 
-            if (this.logger.IsEnabled(LogLevel.Verbose))
+            // TODO: Remove workaround for bug in composite logger.
+            if (Program.IsEnabled(LogLevel.Verbose))
+            //if (this.logger.IsEnabled(LogLevel.Verbose))
             {
                 this.logger.Verbose(this.GetLaunchMessage());
                 this.stopwatch.Start();
@@ -96,7 +98,9 @@ namespace Plexdata.QuickCopy.Timers
             {
                 if (disposing)
                 {
-                    if (this.logger.IsEnabled(LogLevel.Verbose))
+                    // TODO: Remove workaround for bug in composite logger.
+                    if (Program.IsEnabled(LogLevel.Verbose))
+                    //if (this.logger.IsEnabled(LogLevel.Verbose))
                     {
                         this.stopwatch.Stop();
 

@@ -23,14 +23,17 @@
  */
 
 using Plexdata.LogWriter.Abstraction;
+using Plexdata.LogWriter.Extensions;
 using Plexdata.QuickCopy.Handlers;
 using Plexdata.QuickCopy.Helpers;
 using Plexdata.QuickCopy.Models;
+using Plexdata.QuickCopy.Native;
 using Plexdata.QuickCopy.Timers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 namespace Plexdata.QuickCopy.Builders
@@ -73,10 +76,18 @@ namespace Plexdata.QuickCopy.Builders
                 {
                     foreach (String file in arguments.Files)
                     {
+                        String source = Path.GetFullPath(file);
+                        String origin = source;
+
+                        source = this.Resolve(source, out Boolean resolved);
+
+                        String target = Path.Combine(arguments.Target, Path.GetFileName(source));
+
                         result.Add(new PlaylistEntry()
                         {
-                            Source = Path.GetFullPath(file),
-                            Target = Path.Combine(arguments.Target, Path.GetFileName(file)),
+                            Source = source,
+                            Origin = resolved ? origin : String.Empty,
+                            Target = target,
                             IsMove = arguments.IsMove,
                             IsVerify = arguments.IsVerify,
                             IsOverwrite = arguments.IsOverwrite,
@@ -85,18 +96,23 @@ namespace Plexdata.QuickCopy.Builders
                 }
                 else
                 {
-                    DirectoryInfo folder = new DirectoryInfo(FilePathAdjuster.ToLongPath(arguments.Source));
+                    DirectoryInfo folder = new DirectoryInfo(FilePathAdjuster.ToLongPath(this.Resolve(arguments.Source)));
                     SearchOption option = arguments.IsRecursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
 
                     foreach (FileInfo file in folder.EnumerateFiles(arguments.Pattern, option))
                     {
                         // The new target filename must include the sub-path of the source folder.
                         String source = file.FullName;
+                        String origin = source;
+
+                        source = this.Resolve(source, out Boolean resolved);
+
                         String target = source.Replace(folder.FullName, String.Empty).TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
 
                         result.Add(new PlaylistEntry()
                         {
                             Source = source,
+                            Origin = resolved ? origin : String.Empty,
                             Target = Path.Combine(arguments.Target, target),
                             IsMove = arguments.IsMove,
                             IsVerify = arguments.IsVerify,
@@ -107,6 +123,43 @@ namespace Plexdata.QuickCopy.Builders
             }
 
             return result.Select(entry => new PlaylistEntryHandler(this.logger, entry, this.token)).ToList();
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private String Resolve(String filename)
+        {
+            return this.Resolve(filename, out Boolean resolved);
+        }
+
+        private String Resolve(String filename, out Boolean resolved)
+        {
+            resolved = false;
+
+            try
+            {
+                String result = ReparseResolver.Resolve(filename, out resolved);
+
+                if (resolved)
+                {
+                    this.logger.Verbose(
+                        MethodBase.GetCurrentMethod(),
+                        $"Reparse point \"{filename}\" resolved to \"{result}\".");
+                }
+
+                return result;
+            }
+            catch (Exception exception)
+            {
+                this.logger.Warning(
+                    MethodBase.GetCurrentMethod(),
+                    $"Resolving reparse point \"{filename}\" has failed. Use original name instead.",
+                    exception);
+
+                return filename;
+            }
         }
 
         #endregion
