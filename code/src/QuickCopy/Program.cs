@@ -60,8 +60,6 @@ namespace Plexdata.QuickCopy
 
         private readonly CancellationTokenSource cancellation = null;
 
-        private FakeLoggerSettings fakeLoggerSettings = null;
-
         #endregion
 
         #region Entry point
@@ -96,26 +94,6 @@ namespace Plexdata.QuickCopy
         }
 
         #endregion
-
-        // TODO: Remove workaround for bug in composite logger.
-        private class FakeLoggerSettings : LoggerSettings
-        {
-            public FakeLoggerSettings(ILoggerSettingsSection configuration) : base()
-            {
-                base.LoadSettings(configuration);
-            }
-        }
-
-        // TODO: Remove workaround for bug in composite logger.
-        public static Boolean IsEnabled(LogLevel level)
-        {
-            if (Program.instance != null && Program.instance.fakeLoggerSettings != null)
-            {
-                return (Int32)level >= (Int32)Program.instance.fakeLoggerSettings.LogLevel;
-            }
-
-            return false;
-        }
 
         #region Private methods
 
@@ -277,11 +255,8 @@ namespace Plexdata.QuickCopy
 
         private void ApplyLogger()
         {
-            ICompositeLogger helper = new CompositeLogger();
             ILoggerSettingsSection section = this.GetLoggerSettings();
-
-            // TODO: Remove workaround for bug in composite logger.
-            this.fakeLoggerSettings = new FakeLoggerSettings(section);
+            ICompositeLogger helper = new CompositeLogger(new CompositeLoggerSettings(section));
 
             helper.AddLogger(new ConsoleLogger(new ConsoleLoggerSettings(section)));
             helper.AddLogger(new PersistentLogger(new PersistentLoggerSettings(section)));

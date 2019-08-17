@@ -86,26 +86,26 @@
     <Reference Include="Plexdata.ArgumentParser.NET, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Plexdata.ArgumentParser.NET.1.0.2\lib\netstandard2.0\Plexdata.ArgumentParser.NET.dll</HintPath>
     </Reference>
-    <Reference Include="Plexdata.LogWriter.Abstraction, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plexdata.LogWriter.Abstraction.1.0.4.1\lib\netstandard2.0\Plexdata.LogWriter.Abstraction.dll</HintPath>
+    <Reference Include="Plexdata.LogWriter.Abstraction, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Plexdata.LogWriter.Abstraction.1.0.4.2\lib\netstandard2.0\Plexdata.LogWriter.Abstraction.dll</HintPath>
     </Reference>
-    <Reference Include="Plexdata.LogWriter.Composite, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plexdata.LogWriter.Composite.1.0.4.1\lib\netstandard2.0\Plexdata.LogWriter.Composite.dll</HintPath>
+    <Reference Include="Plexdata.LogWriter.Composite, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Plexdata.LogWriter.Composite.1.0.4.2\lib\netstandard2.0\Plexdata.LogWriter.Composite.dll</HintPath>
     </Reference>
-    <Reference Include="Plexdata.LogWriter.Console, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plexdata.LogWriter.Console.1.0.4.1\lib\netstandard2.0\Plexdata.LogWriter.Console.dll</HintPath>
+    <Reference Include="Plexdata.LogWriter.Console, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Plexdata.LogWriter.Console.1.0.4.2\lib\netstandard2.0\Plexdata.LogWriter.Console.dll</HintPath>
     </Reference>
-    <Reference Include="Plexdata.LogWriter.Console.Standard, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plexdata.LogWriter.Console.Standard.1.0.4.1\lib\netstandard2.0\Plexdata.LogWriter.Console.Standard.dll</HintPath>
+    <Reference Include="Plexdata.LogWriter.Console.Standard, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Plexdata.LogWriter.Console.Standard.1.0.4.2\lib\netstandard2.0\Plexdata.LogWriter.Console.Standard.dll</HintPath>
     </Reference>
-    <Reference Include="Plexdata.LogWriter.Console.Windows, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plexdata.LogWriter.Console.Windows.1.0.4.1\lib\netstandard2.0\Plexdata.LogWriter.Console.Windows.dll</HintPath>
+    <Reference Include="Plexdata.LogWriter.Console.Windows, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Plexdata.LogWriter.Console.Windows.1.0.4.2\lib\netstandard2.0\Plexdata.LogWriter.Console.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Plexdata.LogWriter.Persistent, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plexdata.LogWriter.Persistent.1.0.4.1\lib\netstandard2.0\Plexdata.LogWriter.Persistent.dll</HintPath>
+    <Reference Include="Plexdata.LogWriter.Persistent, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Plexdata.LogWriter.Persistent.1.0.4.2\lib\netstandard2.0\Plexdata.LogWriter.Persistent.dll</HintPath>
     </Reference>
-    <Reference Include="Plexdata.LogWriter.Stream, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plexdata.LogWriter.Stream.1.0.4.1\lib\netstandard2.0\Plexdata.LogWriter.Stream.dll</HintPath>
+    <Reference Include="Plexdata.LogWriter.Stream, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Plexdata.LogWriter.Stream.1.0.4.2\lib\netstandard2.0\Plexdata.LogWriter.Stream.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
