@@ -1,4 +1,11 @@
 
+**1.0.4**
+- Update of used Nuget packages.
+- Bugfix, composite logger uses `ILoggerSettingsSection`.
+- Workaround for bug in composite logger removed.
+- Version number increased.
+- Releasing and publishing all changes on GitHub.
+
 **1.0.3**
 - Update of used Nuget packages.
 - All loggers replaced by composite logger.

@@ -180,15 +180,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QuickCopy"
-        "ProductCode" = "8:{A3EE9DC5-2740-4A7C-99F7-68F212711F50}"
-        "PackageCode" = "8:{08EB133E-2A41-4534-866C-8EF5D49E5C1A}"
+        "ProductCode" = "8:{491C179F-6CA7-47E8-802F-F3833F68C4FD}"
+        "PackageCode" = "8:{0B1579B1-38E2-4FBC-97F2-9AF5DDAF65D1}"
         "UpgradeCode" = "8:{423C0C0A-FE93-4C8C-AACD-21D849D73470}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.3"
+        "ProductVersion" = "8:1.0.4"
         "Manufacturer" = "8:Plexdata"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -768,7 +768,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D57BDE8F0A584DC4A08689D5FC8FF4C8"
             {
-            "SourcePath" = "8:..\\QuickCopy\\obj\\x64\\Release\\qcp.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_EE708E124A654B5C8EA5F68FCC363749"
